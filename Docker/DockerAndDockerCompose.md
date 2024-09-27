@@ -196,8 +196,14 @@
 - Eliminar contenedores, redes y volúmenes con Docker Compose:
   ```bash
   docker-compose down --rmi all --volumes --remove-orphans
+  docker system prune -a --volumes
   ```
+
+
+
 ---
+
+
 
 ### Recursos Adicionales
 
