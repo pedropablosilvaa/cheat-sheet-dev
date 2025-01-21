@@ -85,7 +85,8 @@ sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --desc
 
 To read the logs of a topic from the beginning:
 
-```bashsh kafka_2.13-3.9.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic neowstopic --from-beginning
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic neowstopic --from-beginning
 ```
 
 ### Produce Messages from Console
