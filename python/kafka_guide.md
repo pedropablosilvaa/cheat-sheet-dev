@@ -34,7 +34,7 @@ Kafka is designed to be stateless for both producers and consumers. The producer
 Kafka depends on Zookeeper for managing the cluster and coordinating partitions. You must start Zookeeper before running Kafka.
 
 ```bash
-sh kafka_2.13-3.9.0/bin/zookeeper-server-start.sh kafka_2.3-3.9.0/config/zookeeper.properties
+sh kafka_2.13-3.9.0/bin/zookeeper-server-start.sh kafka_2.13-3.9.0/config/zookeeper.properties
 ```
 
 This command will start the Zookeeper server with the default configuration.
