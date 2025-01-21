@@ -33,7 +33,9 @@ Kafka is designed to be stateless for both producers and consumers. The producer
 
 Kafka depends on Zookeeper for managing the cluster and coordinating partitions. You must start Zookeeper before running Kafka.
 
-```sh kafka_2.13-3.9.0/bin/zookeeper-server-start.sh kafka_2.3-3.9.0/config/zookeeper.properties```
+```bash
+sh kafka_2.13-3.9.0/bin/zookeeper-server-start.sh kafka_2.3-3.9.0/config/zookeeper.properties
+```
 
 This command will start the Zookeeper server with the default configuration.
 
@@ -41,7 +43,9 @@ This command will start the Zookeeper server with the default configuration.
 
 Once Zookeeper is up and running, you can start the Kafka server.
 
-```sh kafka_2.13-3.9.0/bin/kafka-server-start.sh kafka_2.13-3.9.0/config/server.properties```
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-server-start.sh kafka_2.13-3.9.0/config/server.properties
+```
 
 Kafka is now running and ready to accept producers and consumers.
 
@@ -49,7 +53,9 @@ Kafka is now running and ready to accept producers and consumers.
 
 To work with Kafka, you need to create a topic where producers will publish messages.
 
-```sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic neowstopic --partitions 1 --replication-factor 1```
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic neowstopic --partitions 1 --replication-factor 1
+```
 
 - --bootstrap-server: Specifies the Kafka server.
 - --create: Creates the topic.
@@ -60,7 +66,10 @@ To work with Kafka, you need to create a topic where producers will publish mess
 ### Step 5: List Topics
 
 To list the topics you’ve created:
-```sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list```
+
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+```
 
 ## Useful Kafka Commands
 
@@ -68,19 +77,24 @@ To list the topics you’ve created:
 
 To describe the details of a topic, such as partitions, leader, and replicas:
 
-```sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic neowstopic```
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic neowstopic
+```
 
 ### View Topic Logs
 
 To read the logs of a topic from the beginning:
 
-```sh kafka_2.13-3.9.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic neowstopic --from-beginning```
+```bashsh kafka_2.13-3.9.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic neowstopic --from-beginning
+```
 
 ### Produce Messages from Console
 
 If you want to send messages manually from the console to a topic:
 
-```sh kafka_2.13-3.9.0/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic neowstopic```
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic neowstopic
+```
 
 This command allows you to type messages into the console and send them to neowstopic.
 
@@ -88,13 +102,17 @@ This command allows you to type messages into the console and send them to neows
 
 To consume messages from the console:
 
-```sh kafka_2.13-3.9.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic neowstopic --from-beginning```
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic neowstopic --from-beginning
+```
 
 ### Delete a Topic
 
 If you need to delete a topic:
 
-```sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic neowstopic```
+```bash
+sh kafka_2.13-3.9.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic neowstopic
+```
 
 ## Producing and Consuming Messages with Kafka-Python
 
@@ -104,7 +122,9 @@ Now that your Kafka cluster is up and running, and the topic is created, you can
 
 If you don't have the kafka-python library installed, you can install it with pip:
 
-```pip install kafka-python```
+```bash
+pip install kafka-python
+```
 
 ### Create a Producer
 
