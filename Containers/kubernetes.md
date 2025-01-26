@@ -1,5 +1,10 @@
 # Kubernetes guide
 
+Author: Pedro Pablo Silva Antilef
+Based on: [kubebyexample.com Kubernetes guide](https://kubebyexample.com/learning-paths/application-development-kubernetes)
+
+## Introducction to Kubernetes
+
 Kubernetes (also called k8s) manages a highly available cluster of computers, working as a single unit. It allows you to deploy containerized applications across the cluster without binding them to specific machines. Applications must be containerized to leverage this model, offering greater flexibility and availability compared to traditional deployment methods where apps were tightly integrated into individual hosts. Kubernetes automates container distribution and scheduling efficiently. It is an open-source, production-ready platform.
 
 A Kubernetes cluster has two main components:
@@ -154,13 +159,13 @@ Use kubectl create deployment to deploy con
 kubectl create deployment deployment-name --image image --replicas=3
 ```
 
-To see the manifiest of a specific deployment, run:
+To see the manifest of a specific deployment, run:
 
 ```bash
 kubectl get deployment deployment-name -o yaml
 ```
 
-if you want to edit the manifiest, you can run this command:
+if you want to edit the manifest, you can run this command:
 
 ```bash
 kubectl edit deployment deployment-name
@@ -179,6 +184,63 @@ kubectl logs node-id
 ```
 
 ## Kubernetes services: networking
+
+when a pods are created, they are assigned and IP address. This IP allow you to access to pods from everywhere within de Kubernetes Cluster. Pods and containers inside of the pods share the same network, so container in the same pod can communicate beetwen the localhost address.
+
+![Image 1](./images/pod-to-pod.png "Pod-to-pod")
+
+deployment is something of every day in Kubernetes. When features are added or bug is fixed, a new image version is created and deployed, so pods are constantly created and destroyed.
+
+Usually applications have several replicas, and the traffic is balanced across this replicas to ensure a good traffic balance (load-balancing).
+
+In either case, you need a way to reach the pods and containers regardless of the node that they are llocated.
+
+A **Service** in Kubernetes provides reliable access to a group of Pods, abstracting their private IPs. Instead of accessing Pods directly, a Service targets Pods based on criteria like labels and forwards requests to them. It groups related Pods and ensures load balancing across them, enabling consistent and scalable access.
+
+![Image 2](./images/service-redirect-static.png "Service redirect")
+
+It is necesary to define a port when you are creating a service. This port is mapped to a target port that is inside of the pod that you are trying to access.  If no target port is provided, then the port value is used.
+
+There exist two ways to create a service:
+
+- Using expose command:
+
+```bash
+kubectl expose deployment deployment-name --port=8081 --name=service-name --target-port=3000
+```
+
+now you can access to the list service using:
+
+```bash
+kubectl get service
+```
+
+- Using manifest
+Following DevOps principles, services can be created using a manifest. For example, the manifest below creates a service named `nginx-service` that targets Pods with the label `app: nginx`. The service listens on port `8080` and forwards traffic to port `3000` on the Pods. Since the `type` field is omitted, the service defaults to ClusterIP.
+
+```docker-compose
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service (1)
+spec:
+  selector: (2)
+    app: nginx
+  ports: (3)
+    - protocol: TCP
+      port: 8081 (4)
+      targetPort: 3000 (5)
+```
+
+1. Name of the service
+
+2. Labels used to select the target pods
+
+3. Port mapping
+
+4. The port that the service will serve on
+
+5. The port inside the pod where requests are forwarded
 
 ## Docker-compose migration to Kubernetes
 
@@ -206,7 +268,7 @@ or to create a Chart to be used with Helm
 kompose convert -c
 ```
 
-and then run the manifiest that was created in previous step. Replace the current yamls with your owns manifiest files.
+and then run the manifest that was created in previous step. Replace the current yamls with your owns manifest files.
 
 ```bash
  kubectl apply -f web-tcp-service.yaml,redis-leader-service.yaml,redis-replica-service.yaml,web-deployment.yaml,redis-leader-deployment.yaml,redis-replica-deployment.yaml
