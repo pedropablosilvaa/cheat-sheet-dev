@@ -250,6 +250,12 @@ When you already create your manifest file with your deployment and service, the
 kubectl apply -f deploy/deployment.yml
 ```
 
+If you need to enter to a container inside of a pod, just run:
+
+```bash
+kubectl exec -n namespacename pod-name -it -- /bin/sh
+```
+
 ## Docker-compose migration to Kubernetes
 
 This guide is based on the [official documentation](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/). Komposer is a tool that allow you to convert a docker-compose file into a several kubernetes manifests. Maybe will not be a perfect conversion, but definitely will save you time.
