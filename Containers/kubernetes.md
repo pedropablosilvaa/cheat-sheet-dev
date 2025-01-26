@@ -65,7 +65,7 @@ to get the information about the cluster, run:
 kubectl cluster-info
 ```
 
-view cluster configuration:
+view cluster configuration file located in .kube folder in home:
 
 ```bash
 kubectl config view
@@ -83,10 +83,10 @@ to get the list of nodes:
 kubectl get nodes
 ```
 
-to get the list of pods:
+to get the list of pods of all namespaces:
 
 ```bash
-kubectl get pods
+kubectl get pods -A
 ```
 
 to delet all the pods in a specific namespace:
@@ -241,6 +241,14 @@ spec:
 4. The port that the service will serve on
 
 5. The port inside the pod where requests are forwarded
+
+### Deploy your app
+
+When you already create your manifest file with your deployment and service, then just run the following command:
+
+```bash
+kubectl apply -f deploy/deployment.yml
+```
 
 ## Docker-compose migration to Kubernetes
 
