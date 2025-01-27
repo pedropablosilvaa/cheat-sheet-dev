@@ -101,7 +101,7 @@ to get a list of namespaces (a namespace is a way to organize clusters into virt
 kubectl get namespaces
 ```
 
-## Running conteneraized applications
+## Configuring the cluster
 
 To create a new cluster connection run this command:
 
@@ -137,10 +137,22 @@ To create a new context:
 kubectl config set-context --cluster=my-cluster --user=my-user
 ```
 
+A namespace is a way to organize clusters into virtual sub-clusters. You can create a namespace using this:
+
+```bash
+kubectl create namespace my-namespace-name
+```
+
 In a kubectl context, it is possible to set a namespace. If provided, then any command would be executed in that namespace. The following command creates a context that points to the namespace.
 
 ```bash
 kubectl config set-context my-context --cluster=my-cluster --user=my-user --namespace=redhat-dev
+```
+
+or simply:
+
+```bash
+kubectl config set-context --current --namespace=my-namespace
 ```
 
 You can select a context by running:
@@ -242,6 +254,7 @@ spec:
 
 5. The port inside the pod where requests are forwarded
 
+
 ### Deploy your app
 
 When you already create your manifest file with your deployment and service, then just run the following command:
@@ -254,6 +267,12 @@ If you need to enter to a container inside of a pod, just run:
 
 ```bash
 kubectl exec -n namespacename pod-name -it -- /bin/sh
+```
+
+to delete all resources in a namespace:
+
+```bash
+kubectl delete all -n <namespace-name> --all
 ```
 
 ## Docker-compose migration to Kubernetes
