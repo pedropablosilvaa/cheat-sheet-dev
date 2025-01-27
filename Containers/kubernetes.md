@@ -74,7 +74,7 @@ kubectl config view
 view cluster events:
 
 ```bash
-kubectl get events
+kubectl get events --sort-by='.lastTimestamp'
 ```
 
 to get the list of nodes:
@@ -254,6 +254,92 @@ spec:
 
 5. The port inside the pod where requests are forwarded
 
+## Using secrets with Kubernetes
+
+This part of the guide was extracted from [spacelift](https://spacelift.io/blog/kubernetes-secrets)
+
+If you need to use secrets on your app, generate your passowrd encrypted by base64:
+
+```bash
+echo -n 'admin' | base64
+echo -n 'my-password' | base64
+```
+
+then, put the result in a secret.yaml file
+
+```bash
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: bXktcGFzc3dvcmQ=
+```
+
+then run this commando to create the secret based on secret.yaml file. Remember that the secrets are associate to a specific namespace:
+
+```bash
+kubectl -n my-namespace apply -f my-secret.yaml
+```
+
+To see the secret use this command. Replace my-secret with the name of your my-secret.yaml file:
+
+```bash
+kubectl -n my-namespace describe secrets/my-secret
+```
+
+This will give you just the numers of bytes, but if you need to actually see the data, run this command:
+
+```bash
+kubectl -n my-namespace get secret my-secret -o jsonpath='{.data}'
+```
+
+and if you need to decode the output string, run this:
+
+```bash
+echo 'YWRtaW4=' | base64 --decode
+echo 'cGFzc3dvcmQ=' | base64 --decode
+```
+
+edit cretendials:
+
+```bash
+kubectl -n secrets-demo edit secrets database-credentials
+```
+
+delete secret:
+
+```bash
+kubectl delete secret my-secret -n my-namespace
+```
+
+
+This is an example of a pod manifest using secrets:
+
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-pod
+spec:
+  containers:
+    - name: secret-test
+      image: nginx
+      command: ['sh', '-c', 'echo "Username: $USER" "Password: $PASSWORD"']
+      env:
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: username.txt
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: password.txt
+```
 
 ### Deploy your app
 
