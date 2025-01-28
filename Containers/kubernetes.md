@@ -149,7 +149,7 @@ In a kubectl context, it is possible to set a namespace. If provided, then any c
 kubectl config set-context my-context --cluster=my-cluster --user=my-user --namespace=redhat-dev
 ```
 
-or simply:
+or simply run this commando to point the current context to your namespace:
 
 ```bash
 kubectl config set-context --current --namespace=my-namespace
