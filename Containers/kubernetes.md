@@ -244,6 +244,8 @@ spec:
       targetPort: 3000 (5)
 ```
 
+
+
 1. Name of the service
 
 2. Labels used to select the target pods
@@ -254,11 +256,38 @@ spec:
 
 5. The port inside the pod where requests are forwarded
 
+If you need to expose your service, here is a example:
+
+```bash
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb2
+spec:
+  ports:
+    - name: influxdb2
+      protocol: TCP
+      port: 7086
+      targetPort: 8086
+      nodePort: 32321
+  type: NodePort
+  selector:
+    app: influxdb2
+```
+
+and you should be able to enter in this URL:
+
+```bash
+http://localhost:32321/
+```
+
+
 ## Using secrets with Kubernetes
 
 This part of the guide was extracted from [spacelift](https://spacelift.io/blog/kubernetes-secrets)
 
 If you need to use secrets on your app, generate your passowrd encrypted by base64:
+
 
 ```bash
 echo -n 'admin' | base64
