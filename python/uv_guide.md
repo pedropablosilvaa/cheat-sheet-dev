@@ -124,3 +124,9 @@ uv sync
 - Upgrades/downgrades packages to match versions in pyproject.toml.
 
 - Removes unused packages.
+
+To find the path of the current active env:
+
+```bash
+uv python find
+```
