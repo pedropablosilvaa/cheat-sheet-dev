@@ -47,3 +47,60 @@ To access API server from https://localhost:8080
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
+### Login Using The CLI
+
+When ArgoCD is initialized a auto-generated passowrd is set by default. This password is stored in a secret named ```argocd-initial-admin-secret``` in the argocd installation namespace. To get this password use argocd CLI:
+
+```bash
+argocd admin initial-password -n argocd
+```
+
+with the output of the above cli command, login into ArgoCD IP or hostname:
+
+```bash
+argocd login <ARGOCD_SERVER>
+```
+
+if your are running this in a localhost:
+
+```bash
+argocd login localhost:8080
+```
+
+then, update your password:
+
+```bash
+argocd account update-password
+```
+
+### Create an app from a git repository
+
+#### Create app via CLI
+
+Set the current namespace to argocd running:
+
+```bash
+kubectl config set-context --current --namespace=argocd
+```
+
+Create the example guestbook app (change the repo by that one you want to manage):
+
+```bash
+argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
+```
+
+### Sync (Deploy) the app
+
+#### Syncing via CLI
+
+get the current sync status
+
+```bash
+argocd app get guestbook
+```
+
+sync the app:
+
+```bash
+argocd app sync guestbook
+```
