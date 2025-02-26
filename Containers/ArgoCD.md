@@ -1,6 +1,6 @@
 # Argo CD guide
 
-ArgoCD Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes (k8s).
+ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes (k8s).
 
 This is a guide to install and use ArgoCD. This guide is based in the folowing [official documentation.](https://argo-cd.readthedocs.io/)
 
