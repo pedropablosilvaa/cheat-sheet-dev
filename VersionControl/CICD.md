@@ -64,3 +64,29 @@ deploy-prod:
     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
   environment: production
 ```
+
+
+## Artifacts reports
+
+Use ```artifacts:reports``` to:
+
+- collect test reports, code quality reports, security reports and others.
+- This reports are used to display information in merge requests, pipeline views and security dashboards.
+
+This reports are always uploaded, regardless of the job results. Use ```artifacts:expire_in``` to set an expiration time.
+
+To browse the report output files, include ```artifacts:paths``` in the job definition.
+
+There is a lot of type of artifacts, so here are the most used. For more information about other types of artifacts [see official documentation](https://docs.gitlab.com/ci/yaml/artifacts_reports/).
+
+### ```artifacts:reports:junit```
+
+This type of artifacts allow to save 
+
+```bash
+  artifacts:
+    when: always
+    reports:
+      junit: /app/tests/results.xml
+    expire_in: "5 days"
+```
